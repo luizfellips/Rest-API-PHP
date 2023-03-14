@@ -11,9 +11,15 @@ if($_GET['url']){
 
         $service = 'App\Services\\'.ucfirst($url[0].'Service');
         array_shift($url);
-
+        $_PUT = '';
         $method = strtolower($_SERVER['REQUEST_METHOD']);
+        if ($method === 'put') {
+        parse_str(file_get_contents('php://input'), $_PUT);
+        var_dump($_PUT);
+        }
+        
 
+        
         try {
             $response = call_user_func_array(array(new $service, $method), $url);;
             http_response_code(200);

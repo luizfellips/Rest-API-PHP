@@ -58,4 +58,25 @@ class User{
         }
     }
 
+    public static function updateUser($id, $data){
+        $connPdo = new \PDO(DBDRIVE.': host='.DBHOST.'; dbname='.DBNAME,DBUSER,DBPASS);
+
+        $sql = 'Update '.self::$table.' SET email = :email, name = :name, password = :password WHERE id = :id';
+        $stmt = $connPdo->prepare($sql);
+
+        $stmt->bindValue(':id', $id);
+        $stmt->bindValue(':email', $data['email']);
+        $stmt->bindValue(':name', $data['name']);
+        $stmt->bindValue(':password', $data['password']);
+        $stmt->execute();
+
+        if($stmt->rowCount() > 0){
+            return 'Usuário atualizado com sucesso!';
+
+            
+        } else{
+            throw new \Exception("Falha ao atualizar usuário(a)");
+        }
+    }
+
 } 

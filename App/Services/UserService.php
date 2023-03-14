@@ -20,9 +20,8 @@ class UserService {
 
     }
 
-    public function update() 
+    public function put($id) 
     {
-
     }
 
     public function delete()
