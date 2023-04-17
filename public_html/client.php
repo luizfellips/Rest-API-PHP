@@ -1,6 +1,7 @@
 <?php
 
-$url = 'http://localhost/PHPProjeto/public_html/api';
+echo "hello";
+$url = 'http://localhost/Rest-API-PHP/public_html/api';
 $class = '/user';
 $param = '';
 

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 
-class User{
+class User {
     private static $table = 'user';
 
     public static function select(int $id){
@@ -71,11 +71,29 @@ class User{
         $stmt->execute();
 
         if($stmt->rowCount() > 0){
-            return 'Usuário atualizado com sucesso!';
+            return 'User updated successfully!';
 
             
         } else{
-            throw new \Exception("Falha ao atualizar usuário(a)");
+            throw new \Exception("Failed to update user!");
+        }
+    }
+
+    public static function delete($id){
+        $connPdo = new \PDO(DBDRIVE.': host='.DBHOST.'; dbname='.DBNAME,DBUSER,DBPASS);
+
+        $sql = 'Delete from '.self::$table.' WHERE id = :id';
+        $stmt = $connPdo->prepare($sql);
+
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+
+        if($stmt->rowCount() > 0){
+            return 'User deleted succesfully!';
+
+            
+        } else{
+            throw new \Exception("Failed to delete user!");
         }
     }
 

@@ -3,23 +3,16 @@
 header("Content-Type: application/json");
 require_once("../vendor/autoload.php");
 
-// api/users/1
-if($_GET['url']){
-    $url = explode('/',$_GET["url"]);
-    if($url[0] === 'api'){
+if ($_GET['url']) {
+    $url = explode('/', $_GET["url"]);
+    if ($url[0] === 'api') {
         array_shift($url);
 
-        $service = 'App\Services\\'.ucfirst($url[0].'Service');
+        $service = 'App\Services\\' . ucfirst($url[0] . 'Service');
         array_shift($url);
-        $_PUT = '';
         $method = strtolower($_SERVER['REQUEST_METHOD']);
-        if ($method === 'put') {
-        parse_str(file_get_contents('php://input'), $_PUT);
-        var_dump($_PUT);
-        }
-        
+      
 
-        
         try {
             $response = call_user_func_array(array(new $service, $method), $url);;
             http_response_code(200);
@@ -27,7 +20,7 @@ if($_GET['url']){
             exit;
         } catch (\Exception $e) {
             http_response_code(404);
-            echo json_encode(array('status' => 'error', 'data' => $e->getMessage()),JSON_UNESCAPED_UNICODE);
+            echo json_encode(array('status' => 'error', 'data' => $e->getMessage()), JSON_UNESCAPED_UNICODE);
             exit;
         }
     }
